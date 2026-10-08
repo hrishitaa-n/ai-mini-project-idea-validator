@@ -2,9 +2,6 @@ venv/
 __pycache__/
 *.pyc
 .env
-
-# Generated FAISS index/embeddings - large binary, can be rebuilt from corpus.csv
 data/faiss.index
 data/doc_ids.npy
-
-# Keep corpus.csv and corpus.db (the real fetched data) - don't ignore those
+desktop.ini

@@ -1,7 +1,7 @@
 """
 Loads the corpus CSV into a SQLite database.
 
-Run after fetch_github_corpus.py has produced data/corpus.csv:
+Run after merge_corpus.py has produced data/corpus.csv:
     python src/build_database.py
 """
 
@@ -23,6 +23,7 @@ CREATE TABLE IF NOT EXISTS documents (
     topics TEXT,
     stars INTEGER DEFAULT 0
 );
+CREATE INDEX IF NOT EXISTS idx_documents_source ON documents(source);
 """
 
 
@@ -31,11 +32,11 @@ def build_database():
 
     if not os.path.exists(CSV_PATH):
         raise FileNotFoundError(
-            f"No corpus CSV found at {CSV_PATH}. Run fetch_github_corpus.py first."
+            f"No corpus CSV found at {CSV_PATH}. Run the fetch scripts and merge_corpus.py first."
         )
 
     conn = sqlite3.connect(DB_PATH)
-    conn.execute(SCHEMA)
+    conn.executescript(SCHEMA)
     conn.execute("DELETE FROM documents")  # rebuild fresh each run
 
     with open(CSV_PATH, encoding="utf-8") as f:
@@ -76,5 +77,17 @@ def get_all_documents():
     return [dict(r) for r in rows]
 
 
+def get_corpus_stats():
+    """Total document count and per-source breakdown (shown in the app sidebar)."""
+    conn = sqlite3.connect(DB_PATH)
+    total = conn.execute("SELECT COUNT(*) FROM documents").fetchone()[0]
+    by_source = dict(
+        conn.execute("SELECT source, COUNT(*) FROM documents GROUP BY source").fetchall()
+    )
+    conn.close()
+    return {"total": total, "by_source": by_source}
+
+
 if __name__ == "__main__":
     build_database()
+    print(get_corpus_stats())

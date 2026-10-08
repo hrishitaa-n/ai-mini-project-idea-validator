@@ -1,20 +1,10 @@
-"""
-AI Mini Project Idea Validator — Streamlit app.
-
-Run with: streamlit run src/app.py
-
-Requires:
-- data/corpus.db and data/faiss.index already built
-  (run fetch_github_corpus.py -> build_database.py -> build_index.py first)
-- GEMINI_API_KEY environment variable set for report generation
-"""
-
 import os
 import streamlit as st
 
 from retrieve import compute_novelty_score
 from feasibility import check_feasibility, COMMON_TECH_STACKS, COMPUTE_LEVELS
 from generate_report import generate_report
+from build_database import get_corpus_stats
 
 st.set_page_config(page_title="AI Mini Project Idea Validator", layout="centered")
 
@@ -23,6 +13,15 @@ st.caption(
     "Checks your project idea against a real corpus of prior ML/AI projects, "
     "scores novelty and feasibility, and generates an explainable report."
 )
+
+
+stats = get_corpus_stats()
+with st.sidebar:
+    st.header("Knowledge Base")
+    st.metric("Documents indexed", f"{stats['total']:,}")
+    for src, n in stats["by_source"].items():
+        st.write(f"- {src}: {n:,}")
+    st.caption("SQLite (metadata) + FAISS (vectors) + all-MiniLM-L6-v2 embeddings")
 
 with st.form("idea_form"):
     idea_text = st.text_area(

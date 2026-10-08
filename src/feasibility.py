@@ -37,7 +37,7 @@ def check_feasibility(
     # Compare against what similar real projects actually used
     similar_tech = set()
     for doc in similar_docs:
-        if doc.get("tech_stack"):
+        if doc.get("tech_stack") and doc.get("source") == "github":
             similar_tech.add(doc["tech_stack"])
 
     if similar_tech and not (set(proposed_tech) & similar_tech):
