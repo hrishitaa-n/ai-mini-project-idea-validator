@@ -1,15 +1,5 @@
-"""
-Fetches real research-paper abstracts from arXiv using the official `arxiv`
-Python package (the sanctioned way to query arXiv programmatically; it
-automatically respects arXiv's rate limit of 1 request / 3 seconds).
+ #respects arXiv's rate limit of 1 request / 3 seconds).
 
-Usage:
-    pip install arxiv
-    python src/fetch_arxiv_corpus.py              # full run (~3-5 min)
-    python src/fetch_arxiv_corpus.py --limit 3    # quick test
-
-Output: data/arxiv_corpus.csv
-"""
 
 import argparse
 import csv
@@ -25,7 +15,7 @@ RESULTS_PER_TOPIC = 60
 MIN_ABSTRACT_LEN = 150
 
 # Applied topics that match typical student mini-projects, so the paper
-# side of the corpus is relevant rather than dominated by frontier-LLM papers.
+
 TOPICS = [
     "spam detection", "fake news detection", "sentiment analysis", "text classification",
     "named entity recognition", "text summarization", "question answering",

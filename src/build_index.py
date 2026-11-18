@@ -2,12 +2,6 @@
 Embeds every document in the corpus database using a sentence-transformer
 and builds a FAISS index for fast similarity search.
 
-Run after build_database.py:
-    python src/build_index.py
-
-Produces:
-    data/faiss.index   - the FAISS index (vectors only)
-    data/doc_ids.npy   - maps FAISS index positions -> document IDs in SQLite
 """
 
 import os
@@ -17,7 +11,7 @@ from sentence_transformers import SentenceTransformer
 
 from build_database import get_all_documents
 
-MODEL_NAME = "all-MiniLM-L6-v2"  # small, fast, good enough for this use case
+MODEL_NAME = "all-MiniLM-L6-v2"  
 INDEX_PATH = os.path.join(os.path.dirname(__file__), "..", "data", "faiss.index")
 IDS_PATH = os.path.join(os.path.dirname(__file__), "..", "data", "doc_ids.npy")
 

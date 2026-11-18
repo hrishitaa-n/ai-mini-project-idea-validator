@@ -1,7 +1,4 @@
-"""
-Rule-based feasibility check. Deliberately simple (form inputs, not LLM
-inference) so it's fast, transparent, and doesn't need extra API calls.
-"""
+
 
 COMMON_TECH_STACKS = [
     "Python", "TensorFlow", "PyTorch", "Scikit-learn", "Keras",

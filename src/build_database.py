@@ -1,9 +1,5 @@
-"""
-Loads the corpus CSV into a SQLite database.
 
-Run after merge_corpus.py has produced data/corpus.csv:
-    python src/build_database.py
-"""
+#Load the corpus CSV into a SQLite database.
 
 import csv
 import os

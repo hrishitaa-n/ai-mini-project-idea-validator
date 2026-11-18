@@ -62,6 +62,23 @@ This should print a novelty score and the most similar real repos found.
 
 ## Run the app
 
+### Run the web UI
+
+In PowerShell, activate the virtual environment, set your Gemini key, start
+the server, then open [http://localhost:8000](http://localhost:8000):
+
+```powershell
+.\venv\Scripts\Activate.ps1
+$env:GEMINI_API_KEY="your-key-here"
+python src/server.py
+```
+
+The web UI uses a FastAPI backend and a static vanilla-JavaScript frontend.
+The backend exposes HTTP endpoints while continuing to use the existing
+retrieval, feasibility, product-search, and report-generation modules.
+
+### Run the Streamlit app (alternative)
+
 ```bash
 cd ..
 streamlit run src/app.py
@@ -78,7 +95,9 @@ idea-validator/
 │   ├── retrieve.py              # similarity search + novelty scoring
 │   ├── feasibility.py           # rule-based feasibility check
 │   ├── generate_report.py       # Gemini RAG report generation
+│   ├── server.py                # FastAPI backend for the web UI
 │   └── app.py                   # Streamlit UI
+├── web/                         # static HTML, CSS, and JavaScript frontend
 ├── data/                        # corpus.csv, corpus.db, faiss.index (generated)
 ├── requirements.txt
 └── README.md

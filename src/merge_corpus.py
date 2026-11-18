@@ -4,7 +4,7 @@ single data/corpus.csv that build_database.py loads.
 
 - Assigns clean sequential integer IDs (GitHub and arXiv use different ID formats)
 - Drops duplicate titles across sources
-- Prints a per-source breakdown (good numbers to quote to your jury)
+- Prints a per-source breakdown 
 
 Usage: python src/merge_corpus.py
 """

@@ -1,10 +1,11 @@
 import os
 import streamlit as st
 
-from retrieve import compute_novelty_score
+from build_database import get_corpus_stats
 from feasibility import check_feasibility, COMMON_TECH_STACKS, COMPUTE_LEVELS
 from generate_report import generate_report
-from build_database import get_corpus_stats
+from products import retrieve_products, get_product_count
+from retrieve import compute_novelty_score
 
 st.set_page_config(page_title="AI Mini Project Idea Validator", layout="centered")
 
@@ -14,13 +15,13 @@ st.caption(
     "scores novelty and feasibility, and generates an explainable report."
 )
 
-
 stats = get_corpus_stats()
 with st.sidebar:
     st.header("Knowledge Base")
     st.metric("Documents indexed", f"{stats['total']:,}")
     for src, n in stats["by_source"].items():
         st.write(f"- {src}: {n:,}")
+    st.write(f"- popular apps/websites catalog: {get_product_count()}")
     st.caption("SQLite (metadata) + FAISS (vectors) + all-MiniLM-L6-v2 embeddings")
 
 with st.form("idea_form"):
@@ -59,6 +60,8 @@ if submitted:
             proposed_tech, dataset_available, compute_level, novelty_result["matches"]
         )
 
+    products_found = retrieve_products(idea_text)
+
     # --- Results display ---
     col1, col2 = st.columns(2)
     with col1:
@@ -74,6 +77,17 @@ if submitted:
             st.write(m["abstract"])
             st.caption(f"Source: {m['source']} | Tech: {m['tech_stack']} | [Link]({m['url']})")
 
+    st.subheader("Popular Apps & Websites Related to Your Idea")
+    if products_found:
+        for p in products_found:
+            st.markdown(
+                f"**[{p['name']}]({p['url']})** · {p['kind']} · {p['category']}  \n"
+                f"{p['description']}  \n"
+                f"*Relevance: {p['similarity']:.2f}*"
+            )
+    else:
+        st.info("No closely related popular apps or websites found in the catalog.")
+
     st.subheader("Feasibility Flags")
     for flag in feasibility_result["flags"]:
         st.write(f"- {flag}")
@@ -87,7 +101,9 @@ if submitted:
     else:
         with st.spinner("Generating report..."):
             try:
-                report = generate_report(idea_text, novelty_result, feasibility_result)
+                report = generate_report(
+                    idea_text, novelty_result, feasibility_result, products=products_found
+                )
                 st.markdown(report)
             except Exception as e:
                 st.error(f"Report generation failed: {e}")

@@ -1,20 +1,4 @@
-"""
-Fetches real ML/AI project repositories from the GitHub Search API.
 
-Scaled-up version:
-  - ~65 topic queries (vs. 15 before)
-  - each query is run twice: once for Python repos and once for Jupyter
-    Notebook repos (most student mini-projects are notebooks)
-  - up to 100 results per request, filtered to repos with 2-1000 stars so
-    results are "mini-project" scale, not giant frameworks like TensorFlow
-  - optional GITHUB_TOKEN env var for 3x faster fetching (recommended)
-
-Usage:
-    python src/fetch_github_corpus.py              # full run
-    python src/fetch_github_corpus.py --limit 3    # quick test, first 3 queries
-
-Output: data/github_corpus.csv
-"""
 
 import argparse
 import csv

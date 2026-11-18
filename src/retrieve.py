@@ -1,11 +1,3 @@
-"""
-Given a new project idea, retrieves the most similar documents from the
-corpus and computes a novelty score.
-
-This is the core module the Streamlit app calls. Can also be run
-directly for a quick CLI test:
-    python src/retrieve.py "your idea text here"
-"""
 
 import os
 import sys
@@ -76,10 +68,6 @@ def retrieve_similar(idea_text: str, top_k: int = 5) -> list[dict]:
 def compute_novelty_score(idea_text: str, top_k: int = 5) -> dict:
     """
     Heuristic novelty score: 1 - max_similarity_to_corpus.
-
-    This is intentionally simple (see project README for why) rather
-    than a formally calibrated score against human labels — that's
-    flagged as future work, not silently glossed over.
     """
     matches = retrieve_similar(idea_text, top_k=top_k)
     if not matches:

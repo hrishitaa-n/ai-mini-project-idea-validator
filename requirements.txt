@@ -5,3 +5,6 @@ streamlit
 google-genai
 numpy
 arxiv
+fastapi
+uvicorn
+pytest

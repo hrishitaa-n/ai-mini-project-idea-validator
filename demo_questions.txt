@@ -1,0 +1,18 @@
+High-overlap ideas (demonstrate strong retrieval matches)
+(These map directly onto corpus search topics)
+1.A spam email classifier using NLP and deep learning
+2.A credit card fraud detection system using machine learning
+3.A stock price prediction model using LSTM time series forecasting
+
+Moderate-overlap ideas (combine two known areas)
+These combine two corpus topics (e.g. chatbot + recommendation, or face recognition + a specific application domain), so expect moderate novelty (0.45-0.65)
+1.A chatbot that recommends movies based on mood and past ratings
+2.A facial emotion recognition system for classroom engagement tracking
+3.A sentiment analysis tool for analyzing product reviews in regional languages
+
+Likely-novel ideas (sparse corpus coverage)
+Since the corpus doesn't contain much (if anything) in agriculture, lost-and-found, or deepfake detection specifically, these should produce higher novelty scores (0.55-0.7+)
+
+1.An AI system that predicts crop yield using satellite imagery and weather data
+2.Predicting molecular solubility with graph neural networks
+3.An AI-based mental health check-in app using voice tone analysis

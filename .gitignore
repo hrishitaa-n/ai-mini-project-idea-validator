@@ -5,3 +5,5 @@ __pycache__/
 data/faiss.index
 data/doc_ids.npy
 desktop.ini
+data/products.index
+data/product_ids.npy
